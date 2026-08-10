@@ -1,0 +1,35 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "test",
+  "enabled": 1,
+  "modified": "2026-07-31 16:27:36.163736",
+  "module": "Practice App",
+  "name": "test",
+  "script": "frappe.ui.form.on(\"Employee Skill Test\", {\r\n\r\n    rating(frm, cdt, cdn) {\r\n\r\n        console.log(\"Rating changed!\");\r\n\r\n        console.log(\"frm:\");\r\n        console.log(frm);\r\n\r\n        console.log(\"cdt:\");\r\n        console.log(cdt);\r\n\r\n        console.log(\"cdn:\");\r\n        console.log(cdn);\r\n\r\n        let row = locals[cdt][cdn];\r\n\r\n        console.log(\"Current child row:\");\r\n        console.log(row);\r\n\r\n    }\r\n\r\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "test",
+  "enabled": 1,
+  "modified": "2026-07-31 16:38:13.159780",
+  "module": "Practice App",
+  "name": "child test",
+  "script": "frappe.ui.form.on('test', {\n\trefresh(frm) {\n\t\t// your code here\n\t}\n})\n\nfrappe.ui.form.on('Employee Skill Test', {\n\n    rating(frm, cdt, cdn) {\n\n        let row = locals[cdt][cdn];\n\n        if (row.rating >= 8) {\n            frappe.model.set_value(\n                cdt,\n                cdn,\n                \"status\",\n                \"Good\"\n            );\n        } else {\n            frappe.model.set_value(\n                cdt,\n                cdn,\n                \"status\",\n                \"Needs Improvement\"\n            );\n        }\n\n    }\n\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Employee",
+  "enabled": 1,
+  "modified": "2026-08-04 11:57:09.030461",
+  "module": "Practice App",
+  "name": "bonus",
+  "script": "frappe.ui.form.on('Employee', {\n\trefresh(frm) {\n\t\t frm.add_custom_button(\"Calculate Bonus\", function() {\n\t\t     frappe.call({\n                method: \"practice_app.api.calculate_bonus\",\n                args: {\n                    employee: frm.doc.name\n                },\n                callback: function(r) {\n                    \n                    frappe.msgprint(String(r.message));\n                }\n            });\n\n        });\n\t}\n})",
+  "view": "Form"
+ }
+]

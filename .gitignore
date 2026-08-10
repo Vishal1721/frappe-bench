@@ -1,0 +1,33 @@
+# Python environment
+env/
+
+# Logs
+logs/
+
+# Runtime files
+config/pids/
+config/*.pid
+config/*.rdb
+
+# Site secrets and local site data
+sites/*/site_config.json
+
+# Generated search/index files
+sites/*/indexes/
+
+# Generated site files
+sites/*/touched_tables.json
+
+# Local backups
+sites/*/private/backups/
+
+# Node modules
+**/node_modules/
+
+# Python cache
+**/__pycache__/
+*.pyc
+
+# Local archived files
+archived/
+sites/assets/

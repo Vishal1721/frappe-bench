@@ -1,0 +1,89 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-07-30 21:53:42.197391",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "name1",
+  "amended_from",
+  "age",
+  "salary",
+  "employee",
+  "department",
+  "skill"
+ ],
+ "fields": [
+  {
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "label": "Name"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "test",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "age",
+   "fieldtype": "Int",
+   "label": "Age"
+  },
+  {
+   "fieldname": "salary",
+   "fieldtype": "Int",
+   "label": "Salary"
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "employee",
+   "options": "Employee master test"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "department",
+   "options": "Department Test"
+  },
+  {
+   "fieldname": "skill",
+   "fieldtype": "Table",
+   "label": "skill",
+   "options": "Employee Skill Test"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-31 16:21:31.799418",
+ "modified_by": "Administrator",
+ "module": "Practice App",
+ "name": "test",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

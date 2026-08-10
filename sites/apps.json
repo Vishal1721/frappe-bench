@@ -1,0 +1,31 @@
+{
+    "frappe": {
+        "resolution": {
+            "commit_hash": null,
+            "branch": null
+        },
+        "required": [],
+        "idx": 1,
+        "version": "16.27.0"
+    },
+    "student_management": {
+        "is_repo": true,
+        "resolution": {
+            "commit_hash": "35d514065b52ec69d22acffe05b823dc4b86ea9e",
+            "branch": "version-16"
+        },
+        "required": [],
+        "idx": 2,
+        "version": "0.0.1"
+    },
+    "practice_app": {
+        "is_repo": true,
+        "resolution": {
+            "commit_hash": "2fd2db15d764eb88204cb097924750dac99f817b",
+            "branch": "version-16"
+        },
+        "required": [],
+        "idx": 3,
+        "version": "0.0.1"
+    }
+}
