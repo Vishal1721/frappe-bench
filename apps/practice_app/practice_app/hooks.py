@@ -7,6 +7,11 @@ app_license = "mit"
 fixtures = [
     "Client Script"
 ]
+scheduler_events = {
+    "daily": [
+        "practice_app.tasks.daily_maintenance"
+    ]
+}
 # Apps
 # ----
 
