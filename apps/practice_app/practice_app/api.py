@@ -8,7 +8,38 @@ def task(task_subject):
     doc.task_subject=task_subject
     doc.insert()
     return doc.name
-    
+# Assignment: python-api-documentation Assignment    
+@frappe.whitelist()
+def query_generator():
+    Employee = frappe.qb.DocType("Employee")
+    Department = frappe.qb.DocType("Department")
+    query = (
+        frappe.qb
+        .from_(Employee)
+        .inner_join(Department)
+        .on(Employee.department == Department.name)
+        .select(
+            Employee.name,
+            Employee.salary,
+            Department.department_name,
+            Employee.joining_date
+        )
+    )
+    results = query.run(as_dict=True)
+    if results:
+        doc = frappe.get_doc("Employee", results[0]["name"])
+        doc.salary = 10000
+        doc.save()
+        frappe.db.commit()
+    for row in results:
+        frappe.db.set_value(
+        "Employee",
+        row["name"],
+        "salary",
+        10000
+    )
+    return results
+
 # @frappe.whitelist()
 # def demo_progress():
 #     for i in range(10):
