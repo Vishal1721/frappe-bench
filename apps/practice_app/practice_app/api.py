@@ -46,5 +46,4 @@ def task(task_subject):
 #     return "Long job enqueued"
 
 
-# def long_job():
-#     frappe.msgprint("Long job")
+
