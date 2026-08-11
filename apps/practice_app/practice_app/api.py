@@ -1,6 +1,8 @@
 
 import frappe
 import time
+from frappe.utils import now
+
 #Assignment: js-frappecall Assignment
 @frappe.whitelist()
 def task(task_subject):
@@ -40,6 +42,20 @@ def query_generator():
     )
     return results
 
+#Assignment: python-api-utilities Assignment
+@frappe.whitelist()
+def get_recent_record():
+    results = frappe.get_list("ToDo",fields=["name","description","owner"],
+    order_by="creation desc",limit=5)
+    for row in results:
+        value=frappe.db.get_value("User",row["owner"],"email")
+        row["email"]=value
+    current_time=now()
+
+    return {
+        "timestamps":current_time,
+        "records":results
+    }
 # @frappe.whitelist()
 # def demo_progress():
 #     for i in range(10):
