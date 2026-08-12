@@ -8,7 +8,7 @@
 // });
 
 frappe.ui.form.on('Task', {
-	refresh(frm) {
+	onload(frm) {
 	    let dialog =new frappe.ui.Dialog({
 	        title:"Task Subject",
 	        fields:[
