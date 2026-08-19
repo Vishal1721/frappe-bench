@@ -1,0 +1,1 @@
+console.log("WEB JS FROM PRACTICE APP LOADED");

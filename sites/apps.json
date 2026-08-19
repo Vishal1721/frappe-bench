@@ -27,5 +27,15 @@
         "required": [],
         "idx": 3,
         "version": "0.0.1"
+    },
+    "vishal_app": {
+        "is_repo": true,
+        "resolution": {
+            "commit_hash": "ee321ceeaac64537866b1d5db20184ce9a165db2",
+            "branch": "main"
+        },
+        "required": [],
+        "idx": 4,
+        "version": "0.0.1"
     }
 }

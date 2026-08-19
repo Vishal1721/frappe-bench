@@ -4,14 +4,64 @@ app_publisher = "vishal"
 app_description = "mastering frappe"
 app_email = "vishal@gmail.com"
 app_license = "mit"
+test_string = ["hello from practice_app"]
 fixtures = [
     "Client Script"
 ]
 scheduler_events = {
     "daily": [
         "practice_app.tasks.daily_maintenance"
+    
     ]
 }
+app_include_js = "/assets/practice_app/js/desk_test.js"
+web_include_js = "/assets/practice_app/js/web_test.js"
+
+web_include_css = "/assets/practice_app/css/web_test.css"
+webform_include_js = {
+    "employee form": "public/js/employee_form.js"
+}
+webform_include_css = {
+    "employee form": "public/css/employee_form.css"
+}
+
+# sounds = [
+#     {
+#         "name": "ping",
+#         "src": "/assets/practice_app/sounds/ping.mp3",
+#         "volume": 0.2
+#     }
+# ]
+# after_build = "practice_app.build.after_build"
+before_install = "practice_app.setup.install.before_install"
+after_install = "practice_app.setup.install.after_install"
+after_sync = "practice_app.setup.install.after_sync"
+
+before_tests = "practice_app.tests.before_tests"
+# hooks.py
+
+
+after_uninstall = "practice_app.setup.uninstall.after_uninstall"
+
+
+# before_write_file = "practice_app.overrides.file.before_write"
+# write_file = "practice_app.overrides.file.write_file"
+delete_file_data_content = "practice_app.overrides.file.delete_file"
+get_sender_details = "practice_app.overrides.email.get_sender_details"
+website_context = {
+    "company_name": "Practice Company",
+    "support_email": "support@practice.com"
+}   
+extend_website_page_controller_context = {
+    "frappe.www.404": "practice_app.pages.context_404"
+}
+website_catch_all = "not_found"
+home_page = "homepage"
+role_home_page= {
+    "Customer":"customer-home",
+    "Employee":"Employee-home"
+}
+# app_include_css = "/assets/practice_app/css/desk_test.css"
 # Apps
 # ----
 

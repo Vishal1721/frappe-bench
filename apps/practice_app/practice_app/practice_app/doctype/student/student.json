@@ -2,18 +2,33 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "allow_rename": 1,
- "creation": "2026-08-06 12:03:27.928256",
+ "creation": "2026-08-14 18:39:39.897823",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "department_name",
+  "student_name",
+  "courses",
+  "email",
   "status"
  ],
  "fields": [
   {
-   "fieldname": "department_name",
+   "fieldname": "student_name",
    "fieldtype": "Data",
-   "label": "Department name"
+   "in_list_view": 1,
+   "label": "Student Name"
+  },
+  {
+   "fieldname": "courses",
+   "fieldtype": "Table",
+   "label": "Courses",
+   "options": "Student Course"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email"
   },
   {
    "fieldname": "status",
@@ -25,10 +40,10 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-14 17:32:12.413508",
+ "modified": "2026-08-15 18:34:43.576662",
  "modified_by": "Administrator",
  "module": "Practice App",
- "name": "Department",
+ "name": "Student",
  "owner": "Administrator",
  "permissions": [
   {

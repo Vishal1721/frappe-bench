@@ -8,7 +8,8 @@
  "engine": "InnoDB",
  "field_order": [
   "employee_name",
-  "deparment"
+  "deparment",
+  "series"
  ],
  "fields": [
   {
@@ -21,12 +22,17 @@
    "fieldtype": "Link",
    "label": "deparment",
    "options": "Department"
+  },
+  {
+   "fieldname": "series",
+   "fieldtype": "Data",
+   "label": "series"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-06 16:08:11.134662",
+ "modified": "2026-08-12 17:06:18.832623",
  "modified_by": "Administrator",
  "module": "Practice App",
  "name": "Employee1",

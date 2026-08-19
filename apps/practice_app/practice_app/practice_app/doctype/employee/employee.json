@@ -9,7 +9,9 @@
   "name1",
   "salary",
   "department",
-  "joining_date"
+  "joining_date",
+  "employee_code",
+  "email"
  ],
  "fields": [
   {
@@ -22,6 +24,8 @@
   {
    "fieldname": "salary",
    "fieldtype": "Currency",
+   "in_filter": 1,
+   "in_standard_filter": 1,
    "label": "salary"
   },
   {
@@ -33,13 +37,24 @@
   {
    "fieldname": "joining_date",
    "fieldtype": "Date",
-   "label": "Joining Date"
+   "label": "Joining Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "employee_code",
+   "fieldtype": "Data",
+   "label": "Employee code"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "email"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-11 13:44:05.216829",
+ "modified": "2026-08-16 23:04:31.078217",
  "modified_by": "Administrator",
  "module": "Practice App",
  "name": "Employee",
@@ -62,5 +77,8 @@
  "rows_threshold_for_grid_search": 20,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
 }

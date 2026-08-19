@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+from frappe.utils import now
 
 logger = frappe.logger("Employee",allow_site=False)
 logger.setLevel("INFO")
@@ -17,7 +18,8 @@ class Employee(Document):
         logger.info(
             f"Employee created: {self.name} by {frappe.session.user}"
         )
-
+    def before_save(self):
+        self.joining_date=now()
     def on_update(self):
         logger.warning(
             f"Employee modified: {self.name} by {frappe.session.user}"
@@ -27,3 +29,4 @@ class Employee(Document):
         logger.critical(
             f"Employee deleted: {self.name} by {frappe.session.user}"
         )
+    

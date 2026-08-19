@@ -6,3 +6,16 @@
 
 // 	},
 // });
+
+frappe.ui.form.on("Employee", {
+    // refresh(frm) {
+    //     console.log("Student form refreshed");
+    //     console.log(frm);
+    //     console.log(frm.doc);
+    //     console.log(frm.doc.status)
+    email(frm) {
+        if (frm.doc.email) {
+            console.log("email entered",frm.doc.email);
+        }
+    }
+});

@@ -56,6 +56,54 @@ def get_recent_record():
         "timestamps":current_time,
         "records":results
     }
+@frappe.whitelist()
+def create_document(values):
+    value = frappe._dict(frappe.parse_json(values))
+    doc=frappe.new_doc("Employee")
+    doc.name1=value.employee_name
+    doc.salary=value.salary
+    doc.email=value.email
+
+    doc.insert()
+    frappe.db.commit()
+    return doc.name
+
+@frappe.whitelist(methods=["PATCH"])
+def update_document(name,values):
+    value = frappe._dict(frappe.parse_json(values))
+    doc=frappe.get_doc("Employee",name)
+    for field, new_value in value.items():
+        doc.set(field, new_value)
+
+    doc.save()
+    frappe.db.commit()
+    return doc.name
+
+@frappe.whitelist()
+def get_document():
+    data = frappe.get_list("Employee",fields=["name","salary"])
+    return data
+
+# @frappe.whitelist(allow_guest=True, methods=["POST"])
+# def delete_document(name):
+#     frappe.log_error("....")
+#     frappe.delete_doc("Employee",name,ignore_permissions=True)
+#     frappe.db.commit()
+#     return "success"
+
+@frappe.whitelist()
+def delete_document(name):
+    print("NAME RECEIVED:", name)
+
+    frappe.delete_doc(
+        "Employee",
+        name
+    )
+
+    frappe.db.commit()
+
+    return "success"
+
 # @frappe.whitelist()
 # def demo_progress():
 #     for i in range(10):
