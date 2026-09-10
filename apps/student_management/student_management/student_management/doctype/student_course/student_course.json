@@ -7,19 +7,21 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "section_break_ifbv"
+  "student_name"
  ],
  "fields": [
   {
-   "fieldname": "section_break_ifbv",
-   "fieldtype": "Section Break"
+   "fieldname": "student_name",
+   "fieldtype": "Data",
+   "label": "Student Name",
+   "unique": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-07-16 12:56:15.256060",
+ "modified": "2026-09-08 10:16:56.980892",
  "modified_by": "Administrator",
  "module": "Student Management",
  "name": "Student course",

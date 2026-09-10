@@ -1,0 +1,19 @@
+{
+ "content": null,
+ "creation": "2026-08-26 15:00:18.002205",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2026-08-26 15:00:18.002205",
+ "modified_by": "Administrator",
+ "module": "Practice App",
+ "name": "live-chart",
+ "owner": "Administrator",
+ "page_name": "live-chart",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Realtime Chart"
+}

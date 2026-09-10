@@ -1,5 +1,12 @@
 {
- "actions": [],
+ "actions": [
+  {
+   "action": "List//Employee/List",
+   "action_type": "Route",
+   "group": "Action",
+   "label": "Make Active"
+  }
+ ],
  "allow_bulk_edit": 1,
  "allow_rename": 1,
  "creation": "2026-08-14 18:39:39.897823",
@@ -9,7 +16,8 @@
   "student_name",
   "courses",
   "email",
-  "status"
+  "status",
+  "internal_notes"
  ],
  "fields": [
   {
@@ -35,12 +43,25 @@
    "fieldtype": "Select",
    "label": "Status",
    "options": "Active\nInactive"
+  },
+  {
+   "fieldname": "internal_notes",
+   "fieldtype": "Data",
+   "label": "Internal Notes",
+   "permlevel": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2026-08-15 18:34:43.576662",
+ "links": [
+  {
+   "group": "certificate",
+   "link_doctype": "Student Certificate",
+   "link_fieldname": "student"
+  }
+ ],
+ "make_attachments_public": 1,
+ "modified": "2026-08-24 11:43:55.069718",
  "modified_by": "Administrator",
  "module": "Practice App",
  "name": "Student",
@@ -63,5 +84,6 @@
  "rows_threshold_for_grid_search": 20,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "student_name"
 }

@@ -4,6 +4,7 @@ import "./data";
 import "./int";
 import "./float";
 import "./currency";
+import "./vishal";
 import "./date";
 import "./time";
 import "./datetime";

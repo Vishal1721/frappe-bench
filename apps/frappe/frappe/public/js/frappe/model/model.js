@@ -44,6 +44,7 @@ $.extend(frappe.model, {
 		"Text",
 		"Text Editor",
 		"Time",
+		"Vishal"
 	],
 
 	no_value_type: [

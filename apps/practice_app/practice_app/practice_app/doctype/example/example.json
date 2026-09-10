@@ -1,0 +1,125 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-08-19 14:29:17.123277",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "first_name",
+  "last_name",
+  "full_name",
+  "link",
+  "dynlink",
+  "barcode",
+  "button",
+  "code_field",
+  "float",
+  "html",
+  "rating",
+  "duration_ptra",
+  "signature_vmpn",
+  "sdfgh"
+ ],
+ "fields": [
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "first name"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Barcode",
+   "label": "last name"
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "is_virtual": 1,
+   "label": "full name"
+  },
+  {
+   "fieldname": "link",
+   "fieldtype": "Link",
+   "label": "link",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "dynlink",
+   "fieldtype": "Dynamic Link",
+   "label": "dynlink",
+   "options": "link"
+  },
+  {
+   "fieldname": "barcode",
+   "fieldtype": "Barcode",
+   "label": "Barcode"
+  },
+  {
+   "fieldname": "button",
+   "fieldtype": "Button",
+   "label": "Button"
+  },
+  {
+   "fieldname": "code_field",
+   "fieldtype": "Code",
+   "label": "code field"
+  },
+  {
+   "fieldname": "float",
+   "fieldtype": "Float",
+   "label": "float"
+  },
+  {
+   "fieldname": "html",
+   "fieldtype": "HTML",
+   "label": "html",
+   "options": "<div>\n    <h3>Employee Information</h3>\n    <p>Please verify the employee details.</p>\n</div>"
+  },
+  {
+   "fieldname": "rating",
+   "fieldtype": "Rating",
+   "label": "rating"
+  },
+  {
+   "fieldname": "duration_ptra",
+   "fieldtype": "Duration"
+  },
+  {
+   "fieldname": "signature_vmpn",
+   "fieldtype": "Signature",
+   "options": "vishal"
+  },
+  {
+   "fieldname": "sdfgh",
+   "fieldtype": "Vishal"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-07 12:01:55.502386",
+ "modified_by": "Administrator",
+ "module": "Practice App",
+ "name": "example",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

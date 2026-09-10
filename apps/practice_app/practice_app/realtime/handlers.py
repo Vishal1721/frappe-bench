@@ -1,12 +1,13 @@
+print("🔥 REALTIME HANDLERS LOADED")
 from frappe.realtime import Socket, realtime
 import frappe
-@realtime.on("hello")
-def hello(socket: Socket, name: str):
-    frappe.msgprint("Received from browser:", name)
+@realtime.on("project_subscribe")
+def project_subscribe(socket: Socket, project: str):
 
-    socket.emit(
-        "hello_response",
-        {
-            "message": f"Hello {name}!"
-        }
-    )
+    print("Socket ID:", socket.id)
+    print("Before:", socket.rooms)
+
+    if socket.has_permission("Project", project):
+        socket.join(f"project:{project}")
+
+    print("After:", socket.rooms)

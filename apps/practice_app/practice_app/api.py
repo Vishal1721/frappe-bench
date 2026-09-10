@@ -3,6 +3,126 @@ import frappe
 import time
 from frappe.utils import now
 
+@frappe.whitelist()
+def get_default_amount(expense_type):
+    default_amount = frappe.db.get_value('Expense Type',expense_type,'amount')
+    return {
+        "default_amount":default_amount
+    }
+@frappe.whitelist()
+def get_employee_department(employee):
+    department = frappe.db.get_value('Employee3',employee,'department')
+    return {
+        "department": department
+    }
+
+
+@frappe.whitelist()
+def test():
+    q = frappe.qb.get_query(
+        "Asset Request",
+        fields=[
+            "name",
+            "employee",
+            "total_amount",
+            {"items": ["asset", "quantity", "rate", "amount"]}
+        ]
+    )
+
+    return q.run(as_dict=True)
+
+
+@frappe.whitelist()
+def click_method():
+    return {
+        "word":"hi i am vishal"
+    }
+@frappe.whitelist()
+def send_chart_data(label, value):
+
+    frappe.publish_realtime(
+        "test_event",
+        {
+            "label": label,
+            "points": [value]
+        }
+    )
+
+    return "Data sent"
+
+@frappe.whitelist()
+def test_progress():
+
+    print("🔥 FUNCTION STARTED")
+
+    for i in range(0, 101, 10):
+
+        print("🔥 PUBLISHING:", i)
+
+        frappe.publish_progress(
+            i,
+            title="Processing",
+            description=f"Progress: {i}%"
+        )
+
+        time.sleep(1)
+
+    print("🔥 FUNCTION FINISHED")
+
+    return "Completed"
+
+@frappe.whitelist()
+def generate_report():
+
+    frappe.publish_progress(
+        10,
+        title="Generating Report",
+        description="Collecting data..."
+    )
+
+    # do database work
+
+    frappe.publish_progress(
+        50,
+        title="Generating Report",
+        description="Processing data..."
+    )
+
+    # more work
+
+    frappe.publish_progress(
+        100,
+        title="Generating Report",
+        description="Report completed"
+    )
+
+    return "Done"
+    
+def sample():
+    print("Hi")
+@frappe.whitelist()
+def send_realtime_message():
+    frappe.publish_realtime(
+        "student_update",
+        message={
+            "status":"Active",
+            "message": "Hello from Frappe server!"
+        }
+    )
+
+    return "Event published"
+
+@frappe.whitelist()
+def update_student_status(student_name):
+    doc=frappe.get_doc("Student",student_name)
+    doc.status="Inactive"
+    doc.save(ignore_permissions=True)
+    frappe.publish_realtime(
+        "Student_update",
+        message={"status":doc.status}
+    )
+    return "SucessFully changed"
+
 #Assignment: js-frappecall Assignment
 @frappe.whitelist()
 def task(task_subject):

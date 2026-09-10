@@ -1,0 +1,10 @@
+{
+ "creation": "2026-08-21 18:22:53.958650",
+ "doc_type": "Student",
+ "doctype": "Permission Type",
+ "modified": "2026-08-21 18:22:53.958650",
+ "modified_by": "Administrator",
+ "name": "student_approve",
+ "owner": "Administrator",
+ "perm_type": "approve"
+}

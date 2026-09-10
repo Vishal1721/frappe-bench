@@ -6,19 +6,25 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "first_name"
+  "first_name",
+  "last_name"
  ],
  "fields": [
   {
    "fieldname": "first_name",
-   "fieldtype": "Data",
+   "fieldtype": "Vishal",
    "label": "First Name"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Vishal",
+   "label": "last_name"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-19 11:50:06.781626",
+ "modified": "2026-08-25 19:04:15.368993",
  "modified_by": "Administrator",
  "module": "Practice App",
  "name": "Contact1",

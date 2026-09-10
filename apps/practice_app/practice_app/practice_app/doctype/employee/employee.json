@@ -54,7 +54,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-16 23:04:31.078217",
+ "modified": "2026-09-07 14:45:50.850383",
  "modified_by": "Administrator",
  "module": "Practice App",
  "name": "Employee",
@@ -78,6 +78,7 @@
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": [],
+ "title_field": "name1",
  "track_changes": 1,
  "track_seen": 1,
  "track_views": 1

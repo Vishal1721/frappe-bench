@@ -1,4 +1,6 @@
 frappe
+erpnext
 student_management
 vishal_app
+learning
 practice_app

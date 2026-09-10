@@ -32,7 +32,7 @@ webform_include_css = {
 #         "volume": 0.2
 #     }
 # ]
-# after_build = "practice_app.build.after_build"
+after_build = "practice_app.build.after_build"
 before_install = "practice_app.setup.install.before_install"
 after_install = "practice_app.setup.install.after_install"
 after_sync = "practice_app.setup.install.after_sync"

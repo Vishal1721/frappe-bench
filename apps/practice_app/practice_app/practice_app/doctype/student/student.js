@@ -72,3 +72,45 @@
 //         });
 //     }
 // });
+// frappe.ui.form.on('Student', {
+//     refresh(frm) {
+//         if(!frm.custom_field) {
+//         let field = frm.fields_dict['email'].$wrapper;
+//         frm.custom_field = $('<div class="example"></div>')
+//         field.before(frm.custom_field)
+//         frm.custom_due_date_field = frappe.ui.form.make_control({
+//                 parent: frm.custom_field, 
+//                 df: {
+//                     label: 'Custom Due Date',
+//                     fieldname: 'custom_due_date',
+//                     fieldtype: 'Date'
+//                 },
+//                 render_input: true
+//             });
+            
+//     }
+// }
+// })
+
+frappe.ui.form.on('Student', {
+    refresh(frm) {
+    let d = new frappe.ui.Dialog({
+        title:"example",
+        fields: [
+            {
+                label:"name",
+                fieldname:"name1",
+                fieldtype:"Data"
+            },
+            
+        ],
+       size:"small",
+       primary_action_label:"Submit",
+       primary_action(values) {
+        console.log(values)
+        d.hide()
+       }
+    })
+    d.show()   
+}
+})
