@@ -11,6 +11,10 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 		return "Report";
 	}
 
+	get show_saved_layout_menu() {
+		return false;
+	}
+
 	render_header() {
 		// Override List View Header
 	}
@@ -22,7 +26,7 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 		}
 		this.view = "Report";
 
-		this.link_title_doctype_fields = [];
+		this.link_title_values = new Map();
 
 		const route = frappe.get_route();
 		if (route.length === 4) {
@@ -44,7 +48,8 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 				this.order_by = this.report_doc.json.order_by;
 				this.add_totals_row = this.report_doc.json.add_totals_row;
 				this.page_title = __(this.report_name);
-				this.page_length = this.report_doc.json.page_length || 20;
+				this.selected_page_count = this.page_length =
+					this.report_doc.json.page_length || 20;
 				this.order_by = this.report_doc.json.order_by || "creation desc";
 				this.chart_args = this.report_doc.json.chart_args;
 			});
@@ -63,15 +68,11 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 	}
 
 	setup_events() {
-		const me = this;
 		if (this.list_view_settings?.disable_auto_refresh) {
 			return;
 		}
 		frappe.realtime.doctype_subscribe(this.doctype);
 		frappe.realtime.on("list_update", (data) => this.on_update(data));
-		this.page.actions_btn_group.on("show.bs.dropdown", () => {
-			me.toggle_workflow_actions();
-		});
 	}
 
 	setup_page() {
@@ -148,31 +149,35 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 
 	set_link_title_field_value() {
 		let rows = this.datatable?.datamanager?.rows;
-		let link_col_indices = this.datatable?.datamanager?.columns
+		let col_indices_by_doctype = {};
+		this.datatable?.datamanager?.columns
 			?.filter((c) => c.docfield?.fieldtype === "Link")
-			.map((c) => c.colIndex);
+			.forEach((c) => {
+				col_indices_by_doctype[c.docfield.options] = (
+					col_indices_by_doctype[c.docfield.options] || []
+				).concat(c.colIndex);
+			});
 
-		Object.keys(this.link_title_doctype_fields).forEach(async (key) => {
-			let link_title = await this.get_link_title_field_value(
-				this.link_title_doctype_fields[key],
-				key
-			);
+		this.link_title_values.forEach(async ({ doctype, value }) => {
+			let link_title = await this.get_link_title_field_value(doctype, value);
 
 			if (link_title === undefined) return;
 
 			// update visible DOM elements and cell tooltip
-			document.querySelectorAll(`a[data-name="${key}"]`).forEach((el) => {
+			document.querySelectorAll("a[data-doctype][data-name]").forEach((el) => {
+				if (el.dataset.doctype !== doctype || el.dataset.name !== value) return;
 				if (el.textContent === link_title) return;
 				el.textContent = link_title;
 
 				$(el).closest(".dt-cell__content").attr("title", link_title);
 			});
 
-			if (rows?.length && link_col_indices?.length) {
+			let col_indices = col_indices_by_doctype[doctype];
+			if (rows?.length && col_indices?.length) {
 				for (let row of rows) {
-					for (let ci of link_col_indices) {
+					for (let ci of col_indices) {
 						let cell = row[ci];
-						if (cell?.content === key && cell.html) {
+						if (cell?.content === value && cell.html) {
 							cell.html = null;
 						}
 					}
@@ -357,6 +362,11 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 				onCheckRow: () => {
 					const checked_items = this.get_checked_items();
 					this.toggle_actions_menu_button(checked_items.length > 0);
+					// refresh workflow actions on selection, not on menu open —
+					// see the matching note in list_view.js
+					if (checked_items.length > 0) {
+						this.debounced_toggle_workflow_actions();
+					}
 				},
 			},
 			hooks: {
@@ -1000,7 +1010,9 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 			}
 			const field_label = frappe.meta.get_label(doctype, field[0]);
 			frappe.show_alert(
-				__("Also adding the dependent currency field {0}", [__(field_label).bold()])
+				__("Also adding the dependent currency field {0}", [
+					__(field_label, null, doctype).bold(),
+				])
 			);
 		}
 	}
@@ -1013,7 +1025,9 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 			this.refresh();
 			const field_label = frappe.meta.get_label(doctype, field[0]);
 			frappe.show_alert(
-				__("Also adding the status dependency field {0}", [__(field_label).bold()])
+				__("Also adding the status dependency field {0}", [
+					__(field_label, null, doctype).bold(),
+				])
 			);
 		}
 	}
@@ -1064,13 +1078,7 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 		);
 
 		// add status field derived from docstatus, if status is not a standard field
-		let has_status_values = false;
-
-		if (this.data) {
-			has_status_values = frappe.get_indicator(this.data[0], this.doctype);
-		}
-
-		if (!frappe.meta.has_field(this.doctype, "status") && has_status_values) {
+		if (!frappe.meta.has_field(this.doctype, "status") && frappe.has_indicator(this.doctype)) {
 			doctype_fields = [
 				{
 					label: __("Status"),
@@ -1183,8 +1191,8 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 			} else {
 				// if status is not in fields append status column derived from docstatus
 				if (
-					!this.fields.includes(["status", this.doctype]) &&
-					!frappe.meta.has_field(this.doctype, "status")
+					!frappe.meta.has_field(this.doctype, "status") &&
+					frappe.has_indicator(this.doctype)
 				) {
 					column = this.build_column(["docstatus", this.doctype]);
 				}
@@ -1302,11 +1310,15 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 						if (!curr.column.docfield) return acc;
 
 						if (
+							curr.content &&
 							curr.column.docfield.fieldtype == "Link" &&
 							frappe.boot.link_title_doctypes.includes(curr.column.docfield.options)
 						) {
-							this.link_title_doctype_fields[curr.content] =
-								curr.column.docfield.options;
+							const doctype = curr.column.docfield.options;
+							this.link_title_values.set(`${doctype}::${curr.content}`, {
+								doctype,
+								value: curr.content,
+							});
 						}
 						acc[curr.column.docfield.fieldname] = curr.content;
 						return acc;
@@ -1401,7 +1413,11 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 					this.remove_column_from_datatable(col);
 				}
 			} else if (col.field in d) {
-				const value = d[col.field];
+				let rendered_value = d[col.field];
+				if (col.docfield.fieldtype == "Data") {
+					rendered_value = frappe.utils.escape_html(rendered_value);
+				}
+				const value = rendered_value;
 				return {
 					name: d.name,
 					doctype: col.docfield.parent,
@@ -1459,7 +1475,7 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 					if (r.message != this.report_name) {
 						// Rerender the reports dropdown,
 						// so that this report is included in the dropdown as well.
-						frappe.boot.user.all_reports[r.message] = {
+						frappe.boot.allowed_reports[r.message] = {
 							ref_doctype: this.doctype,
 							report_type: "Report Builder",
 							title: r.message,
@@ -1528,7 +1544,7 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 				.map((f) => {
 					const [doctype, fieldname, condition, value] = f;
 					const docfield = frappe.meta.get_docfield(doctype, fieldname);
-					const label = `<b>${__(frappe.meta.get_label(doctype, fieldname))}</b>`;
+					const label = `<b>${frappe.meta.get_translated_label(doctype, fieldname)}</b>`;
 					switch (condition) {
 						case "=":
 							return __("{0} is equal to {1}", [
@@ -1653,17 +1669,27 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 						rows_in_order.push(total_data);
 					}
 
-					frappe.ui.get_print_settings(false, (print_settings) => {
-						var title = this.report_name || __(this.doctype);
-						frappe.render_grid({
-							title: title,
-							subtitle: this.get_filters_html_for_print(),
-							print_settings: print_settings,
-							columns: this.columns,
-							data: rows_in_order,
-							can_use_smaller_font: 1,
-						});
-					});
+					frappe.ui.get_print_settings(
+						false,
+						(print_settings) => {
+							var title = this.report_name || __(this.doctype);
+							frappe.render_grid({
+								title: title,
+								subtitle: print_settings?.include_filters
+									? this.get_filters_html_for_print()
+									: null,
+								print_settings: print_settings,
+								columns: this.columns,
+								data: rows_in_order,
+								can_use_smaller_font: 1,
+							});
+						},
+						null,
+						null,
+						false,
+						null,
+						true
+					);
 				},
 			},
 			{
@@ -1794,9 +1820,56 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 							if (!data.export_all_rows) {
 								args.start = 0;
 								args.page_length = this.data.length;
+
+								// Send display-order primary keys so the server
+								// can filter+reorder the exported rows.
+								// Mirrors Query Report's visible_idx pattern.
+								const view_order = this.datatable?.datamanager?.rowViewOrder;
+								if (view_order?.length && this.data?.length) {
+									let visible_names = view_order
+										.map((idx) => this.data[idx]?.name)
+										.filter((n) => n);
+									if (selected_items?.length) {
+										const checked = new Set(selected_items);
+										visible_names = visible_names.filter((n) =>
+											checked.has(n)
+										);
+									}
+									if (visible_names.length) {
+										args.visible_names = JSON.stringify(visible_names);
+									}
+								}
 							} else {
 								delete args.start;
 								delete args.page_length;
+
+								// "Export all rows" bypasses visible_names.
+								//  Reflect the datatable's client-side column sort into
+								// args.order_by so all matching rows return in
+								// the user's chosen sort.
+								const sorted_col = this.datatable?.datamanager
+									?.getColumns?.()
+									?.find(
+										(c) =>
+											c.sortOrder &&
+											c.sortOrder !== "none" &&
+											c.docfield?.fieldname
+									);
+								if (sorted_col) {
+									const order = sorted_col.sortOrder;
+									// Whitelist guard to validate order_by
+									if (["asc", "desc"].includes(order)) {
+										const parent_dt =
+											sorted_col.docfield.parent || this.doctype;
+										const table = "`tab" + parent_dt + "`";
+										const field = "`" + sorted_col.docfield.fieldname + "`";
+										args.order_by = ["name", "creation", "modified"].includes(
+											sorted_col.docfield.fieldname
+										)
+											? `${table}.${field} ${order}`
+											: `${table}.${field} ${order}, ${table}.\`name\` ${order}`;
+									}
+								}
 							}
 							args.export_in_background = data.export_in_background;
 							if (data.export_in_background) {

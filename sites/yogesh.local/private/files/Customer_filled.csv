@@ -1,0 +1,5 @@
+ID,customer_name,email,phone,city,Status
+CUST-002,Green Valley Stores,green.valley@example.com,9876500002,Bengaluru,Active
+CUST-003,Sunrise Enterprises,sunrise.enterprises@example.com,9876500003,Hyderabad,Active
+CUST-004,Metro Supplies,metro.supplies@example.com,9876500004,Mumbai,Active
+CUST-005,Blue Star Retail,blue.star@example.com,9876500005,Pune,Active

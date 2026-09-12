@@ -1,0 +1,35 @@
+<div class="report-header">
+    <h2 class="text-center">
+        {%= __("Employee Report") %}
+    </h2>
+
+    <p>
+        {%= __("Department") %}: {%= filters.department %}
+    </p>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>{%= __("Name") %}</th>
+            <th>{%= __("Salary") %}</th>
+            <th>{%= __("Department") %}</th>
+            <th>{%= __("Joining Date") %}</th>
+            <th>{%= __("Employee Code") %}</th>
+            <th>{%= __("Email") %}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for(var i=0; i<data.length; i++) { %}
+            <tr>
+                <td>{%= data[i].name1 %}</td>
+                <td>{%= data[i].salary %}</td>
+                <td>{%= data[i].department %}</td>
+                <td>{%= data[i].joining_date %}</td>
+                <td>{%= data[i].employee_code %}</td>
+                <td>{%= data[i].email %}</td>
+            </tr>
+        {% } %}
+    </tbody>
+</table>
