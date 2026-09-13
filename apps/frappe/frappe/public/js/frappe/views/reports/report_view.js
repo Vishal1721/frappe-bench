@@ -1688,6 +1688,7 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 						null,
 						false,
 						null,
+						null,
 						true
 					);
 				},

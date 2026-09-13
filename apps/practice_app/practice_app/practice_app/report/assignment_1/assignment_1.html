@@ -1,0 +1,44 @@
+<div class="report-header">
+
+    <h2 class="text-center">
+        {%= __("Employee Report") %}
+    </h2>
+
+    <p>
+        {%= __("Department") %}: {%= filters.department || __("All Departments") %}
+    </p>
+
+</div>
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>{%= __("Employee") %}</th>
+            <th>{%= __("Salary") %}</th>
+            <th>{%= __("Department") %}</th>
+            <th>{%= __("Joining Date") %}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for(var i=0; i<data.length; i++) { %}
+
+            <tr>
+                <td>{%= data[i].employee %}</td>
+
+                <td>{%= data[i].salary %}</td>
+
+                <td>{%= data[i].department %}</td>
+
+                <td>
+                    {%= dateutil.str_to_user(data[i].joining_date) %}
+                </td>
+            </tr>
+
+        {% } %}
+
+    </tbody>
+
+</table>

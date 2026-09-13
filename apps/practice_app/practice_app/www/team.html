@@ -1,0 +1,10 @@
+<h1>{{ title }}</h1>
+
+<ul>
+    {% for user in user_list %}
+        <li>
+            <strong>{{ user.full_name }}</strong>
+            - {{ user.email }}
+        </li>
+    {% endfor %}
+</ul>
