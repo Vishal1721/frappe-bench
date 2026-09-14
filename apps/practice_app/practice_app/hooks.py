@@ -7,6 +7,15 @@ app_license = "mit"
 test_string = ["hello from practice_app"]
 
 website_generators = ["Team Member"]
+
+#hooks assignment 
+doc_events = {
+    "User": {
+        "validate": "practice_app.api.custom_logic"
+    }
+}
+
+# //fixtures assignment
 fixtures = [
     "Client Script"
 ]

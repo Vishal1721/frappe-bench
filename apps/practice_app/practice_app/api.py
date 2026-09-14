@@ -13,6 +13,11 @@ def limited_greeting():
     frappe.response["message"] = "Hello, Rate Limited World!"
 
 
+#hooks assignment 
+def custom_logic(doc, method):
+    frappe.msgprint("Hook executed!")
+
+
 
 @frappe.whitelist()
 def hello_oauth():
