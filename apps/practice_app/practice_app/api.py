@@ -2,11 +2,17 @@
 import frappe
 import time
 from frappe.utils import now
+from frappe.rate_limiter import rate_limit
+# //rate limit assignment
+@frappe.whitelist(allow_guest=True)
+@rate_limit(limit=5, seconds=60)
+def limited_greeting():
+    logger = frappe.logger()
+    logger.info("Endpoint called.")
+
+    frappe.response["message"] = "Hello, Rate Limited World!"
 
 
-# your_app/api.py
-
-import frappe
 
 @frappe.whitelist()
 def hello_oauth():
