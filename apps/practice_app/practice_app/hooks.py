@@ -5,9 +5,20 @@ app_description = "mastering frappe"
 app_email = "vishal@gmail.com"
 app_license = "mit"
 test_string = ["hello from practice_app"]
+
+website_generators = ["Team Member"]
 fixtures = [
     "Client Script"
 ]
+# fixtures = ["Custom Field", "Property Setter"]
+
+website_redirects = [
+    {
+        "source": "/old-team",
+        "target": "/app"
+    }
+]
+
 scheduler_events = {
     "daily": [
         "practice_app.tasks.daily_maintenance"

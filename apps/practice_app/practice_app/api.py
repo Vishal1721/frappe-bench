@@ -3,6 +3,18 @@ import frappe
 import time
 from frappe.utils import now
 
+
+# your_app/api.py
+
+import frappe
+
+@frappe.whitelist()
+def hello_oauth():
+    return {
+        "message": "Hello from Yogesh!",
+        "user": frappe.session.user
+    }
+    
 @frappe.whitelist()
 def get_default_amount(expense_type):
     default_amount = frappe.db.get_value('Expense Type',expense_type,'amount')

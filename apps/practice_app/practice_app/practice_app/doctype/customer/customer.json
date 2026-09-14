@@ -17,10 +17,12 @@
  "fields": [
   {
    "fieldname": "customer_name",
-   "fieldtype": "Data",
-   "label": "customer_name"
+   "fieldtype": "Link",
+   "label": "customer_name",
+   "options": "Employee"
   },
   {
+   "fetch_from": "customer_name.email",
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "email",
@@ -46,7 +48,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-11 14:20:49.298777",
+ "modified": "2026-09-14 10:58:37.283865",
  "modified_by": "Administrator",
  "module": "Practice App",
  "name": "Customer",
