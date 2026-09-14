@@ -23,6 +23,7 @@ class DesktopIcon(Document):
 		from frappe.core.doctype.has_role.has_role import HasRole
 		from frappe.types import DF
 
+		amended_from: DF.Link | None
 		app: DF.Autocomplete | None
 		bg_color: DF.Literal["gray", "blue"]
 		hidden: DF.Check

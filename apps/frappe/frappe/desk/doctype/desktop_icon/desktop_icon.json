@@ -14,6 +14,7 @@
   "parent_icon",
   "sidebar",
   "icon_image",
+  "amended_from",
   "column_break_3",
   "standard",
   "app",
@@ -148,10 +149,17 @@
    "fieldtype": "Select",
    "label": "Background Color",
    "options": "gray\nblue"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amend From",
+   "options": "Desktop Icon",
+   "search_index": 1
   }
  ],
  "links": [],
- "modified": "2026-02-04 13:59:30.578370",
+ "modified": "2026-09-14 10:34:03.513447",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Desktop Icon",

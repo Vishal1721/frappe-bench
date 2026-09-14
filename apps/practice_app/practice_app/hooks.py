@@ -48,7 +48,7 @@ before_install = "practice_app.setup.install.before_install"
 after_install = "practice_app.setup.install.after_install"
 after_sync = "practice_app.setup.install.after_sync"
 
-before_tests = "practice_app.tests.before_tests"
+# before_tests = "practice_app.tests.before_tests"
 # hooks.py
 
 
