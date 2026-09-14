@@ -1,39 +1,33 @@
 # Copyright (c) 2026, vishal and contributors
 # For license information, please see license.txt
 
-# import frappe
 from frappe import _
 
 
 def execute(filters: dict | None = None):
-    """Return columns and data for the report.
+    """Return columns and data for the normal report."""
 
-    This is the main entry point for the report. It accepts the filters as a
-    dictionary and should return columns and data. It is called by the framework
-    every time the report is refreshed or a filter is updated.
-    """
     columns = [
         {
-            "label": "Employee",
+            "label": _("Employee"),
             "fieldname": "employee",
-            "fieldtype": "Data"
+            "fieldtype": "Data",
         },
         {
-            "label": "Salary",
+            "label": _("Salary"),
             "fieldname": "salary",
-            "fieldtype": "Currency"
+            "fieldtype": "Currency",
         },
         {
-            "label": "Department",
+            "label": _("Department"),
             "fieldname": "department",
-            "fieldtype": "Data"
+            "fieldtype": "Data",
         },
         {
-            "label": "Date",
-            "fieldname":"date",
-            "fieldtype": "Date"
-        }
-
+            "label": _("Date"),
+            "fieldname": "date",
+            "fieldtype": "Date",
+        },
     ]
 
     data = [
@@ -41,47 +35,37 @@ def execute(filters: dict | None = None):
             "employee": "Vishal",
             "salary": 120000,
             "department": "ECE",
-            "date":"2016-03-11"
+            "date": "2016-03-11",
         },
         {
             "employee": "Mouli",
             "salary": 45000,
             "department": "CSE",
-            "date":"2016-08-01"
+            "date": "2016-08-01",
         },
         {
             "employee": "Yogesh",
             "salary": 40000,
             "department": "ECE",
-            "date":"2016-01-19"
-        }
+            "date": "2016-01-19",
+        },
     ]
-
 
     return columns, data
 
+
 def execute_snapshot_report(filters: dict | None = None):
-    """Return columns and data for the report.
-
-    This is the main entry point for snapshot report. When 'Synced
-    Report' is enabled in report, framework will call this method
-    every time the report is refreshed or a filter is updated. It
-    accepts the same filters as normal execute. But a utility method -
-    get_latest_sync, is also imported.
-
-    """
-    from frappe.database.duckdb.database import get_latest_sync
+    """Return columns and data for the snapshot report."""
 
     columns = get_columns()
     data = get_data()
 
     return columns, data
 
-def get_columns() -> list[dict]:
-    """Return columns for the report.
 
-    One field definition per column, just like a DocType field definition.
-    """
+def get_columns() -> list[dict]:
+    """Return columns for the snapshot report."""
+
     return [
         {
             "label": _("Column 1"),
@@ -97,10 +81,8 @@ def get_columns() -> list[dict]:
 
 
 def get_data() -> list[list]:
-    """Return data for the report.
+    """Return data for the snapshot report."""
 
-    The report data is a list of rows, with each row being a list of cell values.
-    """
     return [
         ["Row 1", 1],
         ["Row 2", 2],
